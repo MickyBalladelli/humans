@@ -1,0 +1,218 @@
+[
+  {
+    "id": "sahelanthropus",
+    "name": "Sahelanthropus tchadensis",
+    "shortName": "Sahelanthropus",
+    "start": -7000000,
+    "end": -6000000,
+    "description": "One of the oldest known species in the human family tree, Sahelanthropus tchadensis lived around 7 million years ago in Central Africa. Discovered in Chad in 2001, this species shows a mix of ape-like and human-like features. The braincase is small, like a chimpanzee, but the face is relatively flat and the canine teeth are smaller than those of other apes.",
+    "traits": {
+      "brainSize": "320–380 cc (chimpanzee-sized)",
+      "height": "~1.2 m (estimated)",
+      "diet": "Fruits, leaves, possibly seeds",
+      "tools": "No evidence of tool use"
+    },
+    "region": "Central Africa (Chad)",
+    "ancestors": [],
+    "descendants": ["orrorin"],
+    "model3d": "/models/skull_generic.glb",
+    "color": "#8B4513",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Sahelanthropus_tchadensis_-_TM_266-01-060-1.jpg/300px-Sahelanthropus_tchadensis_-_TM_266-01-060-1.jpg",
+    "smithsonianScan": null,
+    "sketchfabId": "08a5eb1ecef444d3a5f13bf5a2818923"
+  },
+  {
+    "id": "australopithecus-afarensis",
+    "name": "Australopithecus afarensis",
+    "shortName": "Au. afarensis",
+    "start": -3900000,
+    "end": -2900000,
+    "description": "Australopithecus afarensis, best known from the famous skeleton 'Lucy', lived in eastern Africa between 3.9 and 2.9 million years ago. This species walked upright on two legs but still had features well-suited for climbing trees. Their brain was about the size of a chimpanzee's, and they had protruding faces with large canine teeth relative to modern humans.",
+    "traits": {
+      "brainSize": "380–430 cc",
+      "height": "1.0–1.5 m",
+      "diet": "Fruits, leaves, tubers, possibly meat",
+      "tools": "No confirmed stone tool use"
+    },
+    "region": "East Africa (Ethiopia, Tanzania, Kenya)",
+    "ancestors": [],
+    "descendants": ["homo-habilis", "paranthropus"],
+    "model3d": "/models/skull_generic.glb",
+    "color": "#A0522D",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Australopithecus_afarensis.jpg/300px-Australopithecus_afarensis.jpg",
+    "smithsonianScan": null,
+    "sketchfabId": "b23a6d2543ed4bd79ff327551ea77d10"
+  },
+  {
+    "id": "homo-habilis",
+    "name": "Homo habilis",
+    "shortName": "H. habilis",
+    "start": -2400000,
+    "end": -1400000,
+    "description": "Homo habilis, meaning 'handy man', is one of the earliest members of our genus Homo. Living in Africa between 2.4 and 1.4 million years ago, H. habilis made and used simple stone tools known as Oldowan tools — sharp flakes struck from stone cores. This species had a significantly larger brain than earlier australopiths and a more human-like hand capable of fine manipulation.",
+    "traits": {
+      "brainSize": "550–687 cc",
+      "height": "1.0–1.35 m",
+      "diet": "Omnivorous — plants and meat (scavenged)",
+      "tools": "Oldowan stone tools (2.6 Mya)"
+    },
+    "region": "East and South Africa",
+    "ancestors": ["australopithecus-afarensis"],
+    "descendants": ["homo-erectus"],
+    "model3d": "/models/skull_habilis.glb",
+    "color": "#CD853F",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Homo_habilis-KNM_ER_1813.jpg/300px-Homo_habilis-KNM_ER_1813.jpg",
+    "smithsonianScan": null,
+    "sketchfabId": "db15d3dbfee849acb314c46a9a31c4ed"
+  },
+  {
+    "id": "homo-erectus",
+    "name": "Homo erectus",
+    "shortName": "H. erectus",
+    "start": -1900000,
+    "end": -110000,
+    "description": "Homo erectus was the first human species to spread out of Africa into Asia and Europe. With a brain roughly 70–80% the size of a modern human's, H. erectus was an accomplished hunter and tool-maker. They created the Acheulean hand axe, built fires, and likely developed simple social structures. Fossils have been found from Africa to Indonesia ('Java Man') to China ('Peking Man').",
+    "traits": {
+      "brainSize": "600–1100 cc",
+      "height": "1.4–1.85 m",
+      "diet": "Omnivorous — hunting and gathering",
+      "tools": "Acheulean hand axes, fire use"
+    },
+    "region": "Africa, Asia, possibly Europe",
+    "ancestors": ["homo-habilis"],
+    "descendants": ["homo-heidelbergensis", "homo-neanderthalensis"],
+    "model3d": "/models/skull_erectus.glb",
+    "color": "#DAA520",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Homo_erectus_new.jpg/300px-Homo_erectus_new.jpg",
+    "smithsonianScan": {
+      "recordId": "dpo_3d_200056",
+      "specimen": "Sangiran 17",
+      "age": "1.3–1.0 million years old",
+      "institution": "Senckenberg Research Institute, Germany",
+      "viewUrl": "https://3d.si.edu/collections/hominin-fossils"
+    },
+    "sketchfabId": "809bc537e5a648c9bc355f4b1541578d"
+  },
+  {
+    "id": "homo-heidelbergensis",
+    "name": "Homo heidelbergensis",
+    "shortName": "H. heidelbergensis",
+    "start": -700000,
+    "end": -200000,
+    "description": "Homo heidelbergensis is considered an intermediate species between Homo erectus and both Neanderthals and modern humans. This species had a large brain approaching modern human size, hunted large animals using wooden spears, and may have built shelters. Found in Africa and Europe, H. heidelbergensis represents the last common ancestor of Neanderthals and Homo sapiens.",
+    "traits": {
+      "brainSize": "1100–1400 cc",
+      "height": "1.6–1.8 m",
+      "diet": "Large game hunting, plant foods",
+      "tools": "Advanced Acheulean tools, wooden spears"
+    },
+    "region": "Africa and Europe",
+    "ancestors": ["homo-erectus"],
+    "descendants": ["homo-neanderthalensis", "homo-sapiens"],
+    "model3d": "/models/skull_generic.glb",
+    "color": "#B8860B",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Homo_heidelbergensis_-_Cranium_5.jpg/300px-Homo_heidelbergensis_-_Cranium_5.jpg",
+    "smithsonianScan": null,
+    "sketchfabId": "ea8e7acd3f8648608b6e050ed6a2d9d1"
+  },
+  {
+    "id": "homo-neanderthalensis",
+    "name": "Homo neanderthalensis",
+    "shortName": "Neanderthal",
+    "start": -400000,
+    "end": -40000,
+    "description": "Neanderthals were our closest evolutionary relatives, living in Europe and western Asia until about 40,000 years ago. They had large brains (sometimes even larger than modern humans), stocky cold-adapted bodies, and sophisticated tool cultures (Mousterian technology). Recent DNA analysis shows that modern humans of non-African descent carry 1–4% Neanderthal DNA, evidence of interbreeding. Neanderthals buried their dead and may have practiced rudimentary art.",
+    "traits": {
+      "brainSize": "1200–1750 cc",
+      "height": "1.5–1.75 m",
+      "diet": "High proportion of meat, some plants",
+      "tools": "Mousterian tools, hafted weapons"
+    },
+    "region": "Europe and Western Asia",
+    "ancestors": ["homo-heidelbergensis"],
+    "descendants": [],
+    "model3d": "/models/skull_neanderthal.glb",
+    "color": "#4682B4",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Homo_neanderthalensis_adult_male_-_head_model_-_Smithsonian_Museum_of_Natural_History_-_2012-05-17_%28cropped%29.jpg/300px-Homo_neanderthalensis_adult_male_-_head_model_-_Smithsonian_Museum_of_Natural_History_-_2012-05-17_%28cropped%29.jpg",
+    "smithsonianScan": {
+      "recordId": "dpo_3d_200093",
+      "specimen": "La Ferrassie 1",
+      "age": "~70,000–50,000 years old",
+      "institution": "Musée de l'Homme, Paris",
+      "viewUrl": "https://humanorigins.si.edu/evidence/3d-collection/fossils/891/la-ferrassie"
+    },
+    "sketchfabId": "a1ffe02b7e2f42ff972953484f3212d3"
+  },
+  {
+    "id": "denisovans",
+    "name": "Denisovans",
+    "shortName": "Denisovans",
+    "start": -500000,
+    "end": -30000,
+    "description": "Denisovans are an extinct group of archaic humans discovered through ancient DNA analysis of a finger bone and teeth found in Denisova Cave, Siberia. Genetically distinct from both modern humans and Neanderthals, Denisovans interbred with the ancestors of modern Melanesians, Aboriginal Australians, and some Southeast Asian populations, who carry up to 5% Denisovan DNA. Very little skeletal material is known, making them one of the most enigmatic human relatives.",
+    "traits": {
+      "brainSize": "Unknown (estimated large)",
+      "height": "Unknown",
+      "diet": "Unknown, likely omnivorous",
+      "tools": "Possibly advanced (jewelry found nearby)"
+    },
+    "region": "Asia (Siberia, Tibet, Southeast Asia)",
+    "ancestors": ["homo-heidelbergensis"],
+    "descendants": [],
+    "model3d": "/models/skull_generic.glb",
+    "color": "#9370DB",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Denisova_cave_%28cropped%29.jpg/300px-Denisova_cave_%28cropped%29.jpg",
+    "smithsonianScan": null,
+    "sketchfabId": "29851bfb076f4ff9961b62389141635b"
+  },
+  {
+    "id": "homo-floresiensis",
+    "name": "Homo floresiensis",
+    "shortName": "H. floresiensis",
+    "start": -100000,
+    "end": -50000,
+    "description": "Nicknamed 'The Hobbit', Homo floresiensis was a remarkably small-bodied human relative discovered on the Indonesian island of Flores. Standing only about 1 meter tall with a brain the size of a grapefruit, H. floresiensis nonetheless made stone tools and hunted small elephants. Their small size may have resulted from island dwarfism. This species challenges our understanding of hominin diversity in Asia.",
+    "traits": {
+      "brainSize": "380–417 cc",
+      "height": "~1.0–1.1 m",
+      "diet": "Small game, plants, possibly Stegodon (pygmy elephant)",
+      "tools": "Sophisticated Oldowan-like stone tools"
+    },
+    "region": "Flores Island, Indonesia",
+    "ancestors": ["homo-erectus"],
+    "descendants": [],
+    "model3d": "/models/skull_generic.glb",
+    "color": "#20B2AA",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Homo_floresiensis.jpg/300px-Homo_floresiensis.jpg",
+    "smithsonianScan": null,
+    "sketchfabId": "4e424b65d4804a6f9be00215e5172128"
+  },
+  {
+    "id": "homo-sapiens",
+    "name": "Homo sapiens",
+    "shortName": "H. sapiens",
+    "start": -300000,
+    "end": 0,
+    "description": "Homo sapiens — modern humans — emerged in Africa approximately 300,000 years ago. We are characterized by our large, globular brains, our capacity for complex language and symbolic thought, and our extraordinary cultural diversity. Modern humans spread out of Africa around 60,000–70,000 years ago, eventually colonizing every continent. Our species has fundamentally transformed the planet through agriculture, cities, technology, and art.",
+    "traits": {
+      "brainSize": "1200–1400 cc",
+      "height": "1.5–1.9 m",
+      "diet": "Highly varied omnivorous diet; agriculture from ~10,000 ya",
+      "tools": "All tool technologies; written language, computers"
+    },
+    "region": "Worldwide (origin: East/North Africa)",
+    "ancestors": ["homo-heidelbergensis"],
+    "descendants": [],
+    "model3d": "/models/skull_sapiens.glb",
+    "color": "#3CB371",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Homo_sapiens_neanderthalensis_-_head_model.jpg/300px-Homo_sapiens_neanderthalensis_-_head_model.jpg",
+    "smithsonianScan": {
+      "recordId": "dpo_3d_200102",
+      "specimen": "Cro-Magnon 1",
+      "age": "~30,000 years old",
+      "institution": "Musée de l'Homme, Paris",
+      "viewUrl": "https://humanorigins.si.edu/evidence/3d-collection/fossils/904/cro-magnon-1"
+    },
+    "sketchfabId": "caaa46f2a58243ebb7927f27ff15173f"
+  }
+]
