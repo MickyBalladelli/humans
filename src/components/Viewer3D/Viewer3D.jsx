@@ -1,4 +1,4 @@
-import React, { Suspense, useRef } from 'react';
+import React, { Suspense, useRef, useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Environment, Html, Center } from '@react-three/drei';
 import { Box, CircularProgress, Typography, Tooltip, IconButton, Chip, Button } from '@mui/material';
@@ -6,6 +6,21 @@ import GridOnIcon from '@mui/icons-material/GridOn';
 import GridOffIcon from '@mui/icons-material/GridOff';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+
+/** Singleton loader — only fetches the Sketchfab SDK script once. */
+let _sfbApiPromise = null;
+function loadSketchfabApi() {
+  if (window.Sketchfab) return Promise.resolve(window.Sketchfab);
+  if (_sfbApiPromise) return _sfbApiPromise;
+  _sfbApiPromise = new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = 'https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js';
+    script.onload = () => resolve(window.Sketchfab);
+    script.onerror = reject;
+    document.head.appendChild(script);
+  });
+  return _sfbApiPromise;
+}
 
 /**
  * Fallback component shown while the 3D scene is initialising.
@@ -179,18 +194,51 @@ function ProceduralSkull({ color = '#c8b89a', wireframe = false }) {
  */
 export default function Viewer3D({ color = '#c8b89a', height = 400, smithsonianScan = null, sketchfabId = null }) {
   const controlsRef = useRef();
+  const iframeRef = useRef(null);
   const [wireframe, setWireframe] = React.useState(false);
 
   const resetCamera = () => {
     if (controlsRef.current) controlsRef.current.reset();
   };
 
+  // Load the Sketchfab Viewer API and recenter the orbit pivot once the model
+  // is ready. Without this, photogrammetry scans whose scene origin sits at the
+  // specimen's base orbit left-right instead of spinning in place.
+  useEffect(() => {
+    if (!sketchfabId || !iframeRef.current) return;
+    let cancelled = false;
+
+    loadSketchfabApi().then((Sketchfab) => {
+      if (cancelled) return;
+      const client = new Sketchfab(iframeRef.current);
+      client.init(sketchfabId, {
+        autostart: 1,
+        ui_theme: 'dark',
+        ui_infos: 0,
+        ui_watermark: 0,
+        success(api) {
+          if (cancelled) return;
+          api.start();
+          api.addEventListener('viewerready', () => {
+            if (cancelled) return;
+            api.recenterCamera();
+          });
+        },
+        error() {
+          console.warn('Sketchfab viewer failed to load');
+        },
+      });
+    });
+
+    return () => { cancelled = true; };
+  }, [sketchfabId]);
+
   if (sketchfabId) {
     return (
       <Box sx={{ position: 'relative', width: '100%', height, borderRadius: 2, overflow: 'hidden', bgcolor: '#08080f' }}>
         <iframe
+          ref={iframeRef}
           title="3D Fossil Skull"
-          src={`https://sketchfab.com/models/${sketchfabId}/embed?autostart=1&ui_theme=dark&ui_infos=0&ui_watermark=0`}
           style={{ width: '100%', height: '100%', border: 'none', display: 'block' }}
           allow="autoplay; fullscreen; xr-spatial-tracking"
           allowFullScreen
