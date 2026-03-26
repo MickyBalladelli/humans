@@ -1,16 +1,65 @@
-# React + Vite
+# Human Evolution Explorer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An interactive web app for exploring 9 hominin species across 7 million years of human evolution. Browse an interactive timeline, view real photogrammetry skull scans, compare species side-by-side, and read detailed profiles for each species.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Interactive Timeline** — Visualize all 9 species plotted across geological time from Sahelanthropus (~7 Mya) to Homo sapiens
+- **3D Skull Viewer** — Embedded Sketchfab photogrammetry scans for 9/9 species (real fossil casts and reconstructions). Denisovans uses the Harbin cranium reconstruction. Fallback to procedural Three.js skull for any species without a scan
+- **Species Detail Panel** — Traits, range, ancestors/descendants, and a description for each species
+- **Side-by-side Comparison** — Select any two species to compare their skulls and key traits
+- **Search & Filter** — Search species by name across the timeline and home view
 
-## React Compiler
+## Species Covered
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Species | Age | Skull Model Source |
+|---|---|---|
+| Sahelanthropus tchadensis | ~7–6 Mya | MUVHN (CC-BY-NC) |
+| Australopithecus afarensis | ~3.9–2.9 Mya | MUVHN (CC-BY) |
+| Homo habilis | ~2.4–1.4 Mya | MUVHN (CC-BY) |
+| Homo erectus | ~1.9–0.1 Mya | MUVHN (CC-BY) |
+| Homo heidelbergensis | ~700–200 Kya | MUVHN (CC-BY) |
+| Homo neanderthalensis | ~400–40 Kya | MUVHN (CC-BY) |
+| Denisovans | ~500–30 Kya | Adam Worthington / Harbin cranium (CC-BY) |
+| Homo floresiensis | ~100–50 Kya | Thomas Flynn / NHM London (CC-BY) |
+| Homo sapiens | ~300 Kya–present | MUVHN (CC-BY-NC) |
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **React 19** + **Vite**
+- **MUI v7** — dark-themed UI components
+- **@react-three/fiber** + **drei** + **Three.js** — procedural 3D skull fallback
+- **Framer Motion** — animated transitions
+- **Zustand** — global state (selected species, comparison, active view)
+- **Sketchfab embed API** — iframe embeds for real photogrammetry scans
+
+## Getting Started
+
+```bash
+npm install
+npm run dev
+```
+
+Open [http://localhost:5173](http://localhost:5173).
+
+## Build
+
+```bash
+npm run build
+npm run preview
+```
+
+## Deploy
+
+Configured for Vercel with SPA rewrites (`vercel.json`). Any static host works — just serve `dist/` with a catch-all rewrite to `index.html`.
+
+## Data
+
+All species data lives in [`src/data/species.json`](src/data/species.json). Each entry includes traits, geographic range, ancestor/descendant links, and a `sketchfabId` for the 3D skull embed.
+
+## Attribution
+
+Skull photogrammetry scans courtesy of:
+- **MUVHN** (Museo Universidad de Valencia Historia Natural) — [Sketchfab](https://sketchfab.com/MUVHN)
+- **Thomas Flynn / NHM London** — H. floresiensis (LB1) — [Sketchfab](https://sketchfab.com/nebulousflynn)
+- **Adam Worthington** — Denisovan / Harbin cranium reconstruction — [Sketchfab](https://sketchfab.com/adamsworthington)
