@@ -192,10 +192,11 @@ function ProceduralSkull({ color = '#c8b89a', wireframe = false }) {
  * When `sketchfabId` is provided, embeds the real photogrammetry scan from
  * Sketchfab. Otherwise falls back to the procedural Three.js skull.
  */
-export default function Viewer3D({ color = '#c8b89a', height = 400, smithsonianScan = null, sketchfabId = null, cameraYaw = null }) {
+export default function Viewer3D({ color = '#c8b89a', height = 400, smithsonianScan = null, sketchfabId = null, cameraYaw = null, cameraElevation = null }) {
   const controlsRef = useRef();
   const iframeRef = useRef(null);
   const [wireframe, setWireframe] = React.useState(false);
+  const [sketchfabUnavailable, setSketchfabUnavailable] = React.useState(false);
 
   const resetCamera = () => {
     if (controlsRef.current) controlsRef.current.reset();
@@ -205,57 +206,79 @@ export default function Viewer3D({ color = '#c8b89a', height = 400, smithsonianS
   // is ready. Without this, photogrammetry scans whose scene origin sits at the
   // specimen's base orbit left-right instead of spinning in place.
   useEffect(() => {
-    if (!sketchfabId || !iframeRef.current) return;
+    if (!sketchfabId || !iframeRef.current || sketchfabUnavailable) return;
     let cancelled = false;
 
-    loadSketchfabApi().then((Sketchfab) => {
-      if (cancelled) return;
-      const client = new Sketchfab(iframeRef.current);
-      client.init(sketchfabId, {
-        autostart: 1,
-        ui_theme: 'dark',
-        ui_infos: 0,
-        ui_watermark: 0,
-        success(api) {
-          if (cancelled) return;
-          api.start();
-          api.addEventListener('viewerready', () => {
+    loadSketchfabApi()
+      .then((Sketchfab) => {
+        if (cancelled) return;
+        const client = new Sketchfab(iframeRef.current);
+        client.init(sketchfabId, {
+          autostart: 1,
+          ui_theme: 'dark',
+          ui_infos: 0,
+          ui_watermark: 0,
+          success(api) {
             if (cancelled) return;
-            api.recenterCamera();
-            if (cameraYaw != null) {
-              // recenterCamera() runs its own ~600ms animation; wait for it to
-              // finish before reading the settled position and rotating from it.
-              setTimeout(() => {
-                if (cancelled) return;
-                api.getCameraLookAt((err, data) => {
-                  if (err || !data || cancelled) return;
-                  const { position, target } = data;
-                  const angle = (cameraYaw * Math.PI) / 180;
-                  const dx = position[0] - target[0];
-                  const dz = position[2] - target[2];
-                  const cos = Math.cos(angle);
-                  const sin = Math.sin(angle);
-                  // duration 0 = instant snap, no second animation to race with
-                  api.setCameraLookAt(
-                    [target[0] + dx * cos - dz * sin, position[1], target[2] + dx * sin + dz * cos],
-                    target,
-                    0
-                  );
-                });
-              }, 900);
+            api.start();
+            api.addEventListener('viewerready', () => {
+              if (cancelled) return;
+              api.recenterCamera();
+              if (cameraYaw != null || cameraElevation != null) {
+                // camerastop fires when recenterCamera()'s animation fully settles —
+                // much more reliable than a fixed setTimeout.
+                let handled = false;
+                const onCameraStop = () => {
+                  if (handled || cancelled) return;
+                  handled = true;
+                  api.removeEventListener('camerastop', onCameraStop);
+                  api.getCameraLookAt((err, data) => {
+                    if (err || !data || cancelled) return;
+                    const { position, target } = data;
+                    const dx = position[0] - target[0];
+                    const dy = position[1] - target[1];
+                    const dz = position[2] - target[2];
+                    const r = Math.sqrt(dx * dx + dy * dy + dz * dz);
+                    const currentAzimuth = Math.atan2(dx, dz);
+                    const currentElev = Math.asin(Math.max(-1, Math.min(1, dy / r)));
+                    const newAzimuth = currentAzimuth + (cameraYaw != null ? (cameraYaw * Math.PI) / 180 : 0);
+                    const newElev = cameraElevation != null ? (cameraElevation * Math.PI) / 180 : currentElev;
+                    const cosElev = Math.cos(newElev);
+                    api.setCameraLookAt(
+                      [
+                        target[0] + r * cosElev * Math.sin(newAzimuth),
+                        target[1] + r * Math.sin(newElev),
+                        target[2] + r * cosElev * Math.cos(newAzimuth),
+                      ],
+                      target,
+                      0
+                    );
+                  });
+                };
+                api.addEventListener('camerastop', onCameraStop);
+              }
+            });
+          },
+          error() {
+            if (!cancelled) {
+              setSketchfabUnavailable(true);
             }
-          });
-        },
-        error() {
-          console.warn('Sketchfab viewer failed to load');
-        },
+            console.warn('Sketchfab viewer failed to load');
+          },
+        });
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setSketchfabUnavailable(true);
+        }
       });
-    });
 
-    return () => { cancelled = true; };
-  }, [sketchfabId, cameraYaw]);
+    return () => {
+      cancelled = true;
+    };
+  }, [sketchfabId, cameraYaw, cameraElevation, sketchfabUnavailable]);
 
-  if (sketchfabId) {
+  if (sketchfabId && !sketchfabUnavailable) {
     return (
       <Box sx={{ position: 'relative', width: '100%', height, borderRadius: 2, overflow: 'hidden', bgcolor: '#08080f' }}>
         <iframe
@@ -280,6 +303,25 @@ export default function Viewer3D({ color = '#c8b89a', height = 400, smithsonianS
 
   return (
     <Box sx={{ position: 'relative', width: '100%', height, borderRadius: 2, overflow: 'hidden', bgcolor: '#08080f' }}>
+      {sketchfabId && sketchfabUnavailable && (
+        <Chip
+          label="High-detail scan unavailable on this device. Showing simplified 3D view."
+          size="small"
+          sx={{
+            position: 'absolute',
+            top: 8,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            zIndex: 11,
+            maxWidth: 'calc(100% - 16px)',
+            bgcolor: 'rgba(0,0,0,0.6)',
+            color: 'rgba(255,255,255,0.82)',
+            fontSize: '0.62rem',
+            backdropFilter: 'blur(4px)',
+          }}
+        />
+      )}
+
       {/* ── Smithsonian 3D scan banner (procedural mode only) ── */}
       {smithsonianScan && (
         <Box

@@ -85,7 +85,8 @@
     "color": "#B05A00",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Australopithecus_africanus_-_Cast_of_taung_child.jpg/300px-Australopithecus_africanus_-_Cast_of_taung_child.jpg",
     "smithsonianScan": null,
-    "sketchfabId": "7735176c531b48d09993ac7a7a0aa6f5"
+    "sketchfabId": "7735176c531b48d09993ac7a7a0aa6f5",
+    "sketchfabCameraElevation": 35
   },
   {
     "id": "paranthropus",
@@ -157,8 +158,7 @@
       "institution": "Senckenberg Research Institute, Germany",
       "viewUrl": "https://3d.si.edu/collections/hominin-fossils"
     },
-    "sketchfabId": "809bc537e5a648c9bc355f4b1541578d",
-    "sketchfabCameraYaw": 90
+    "sketchfabId": "809bc537e5a648c9bc355f4b1541578d"
   },
   {
     "id": "homo-heidelbergensis",

@@ -106,7 +106,7 @@ function ViewerPage() {
             <Suspense
               fallback={<Skeleton variant="rectangular" height={480} sx={{ borderRadius: 2, bgcolor: '#1a1a2e' }} />}
             >
-              <Viewer3D color={species.color} height={480} smithsonianScan={species.smithsonianScan} sketchfabId={species.sketchfabId} cameraYaw={species.sketchfabCameraYaw ?? null} />
+              <Viewer3D color={species.color} height={480} smithsonianScan={species.smithsonianScan} sketchfabId={species.sketchfabId} cameraYaw={species.sketchfabCameraYaw ?? null} cameraElevation={species.sketchfabCameraElevation ?? null} />
             </Suspense>
           </Box>
 
