@@ -20,7 +20,7 @@ const useStore = create((set) => ({
   clearComparison: () => set({ comparisonSpecies: [null, null] }),
 
   // Which main view is active: 'timeline' | 'comparison' | '3d'
-  activeView: 'timeline',
+  activeView: '3d',
   setActiveView: (view) => set({ activeView: view }),
 
   // Detail drawer open state

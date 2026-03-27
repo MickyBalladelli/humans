@@ -192,7 +192,7 @@ function ProceduralSkull({ color = '#c8b89a', wireframe = false }) {
  * When `sketchfabId` is provided, embeds the real photogrammetry scan from
  * Sketchfab. Otherwise falls back to the procedural Three.js skull.
  */
-export default function Viewer3D({ color = '#c8b89a', height = 400, smithsonianScan = null, sketchfabId = null }) {
+export default function Viewer3D({ color = '#c8b89a', height = 400, smithsonianScan = null, sketchfabId = null, cameraYaw = null }) {
   const controlsRef = useRef();
   const iframeRef = useRef(null);
   const [wireframe, setWireframe] = React.useState(false);
@@ -222,6 +222,28 @@ export default function Viewer3D({ color = '#c8b89a', height = 400, smithsonianS
           api.addEventListener('viewerready', () => {
             if (cancelled) return;
             api.recenterCamera();
+            if (cameraYaw != null) {
+              // recenterCamera() runs its own ~600ms animation; wait for it to
+              // finish before reading the settled position and rotating from it.
+              setTimeout(() => {
+                if (cancelled) return;
+                api.getCameraLookAt((err, data) => {
+                  if (err || !data || cancelled) return;
+                  const { position, target } = data;
+                  const angle = (cameraYaw * Math.PI) / 180;
+                  const dx = position[0] - target[0];
+                  const dz = position[2] - target[2];
+                  const cos = Math.cos(angle);
+                  const sin = Math.sin(angle);
+                  // duration 0 = instant snap, no second animation to race with
+                  api.setCameraLookAt(
+                    [target[0] + dx * cos - dz * sin, position[1], target[2] + dx * sin + dz * cos],
+                    target,
+                    0
+                  );
+                });
+              }, 900);
+            }
           });
         },
         error() {
@@ -231,7 +253,7 @@ export default function Viewer3D({ color = '#c8b89a', height = 400, smithsonianS
     });
 
     return () => { cancelled = true; };
-  }, [sketchfabId]);
+  }, [sketchfabId, cameraYaw]);
 
   if (sketchfabId) {
     return (

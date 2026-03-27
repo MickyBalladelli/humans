@@ -17,6 +17,13 @@ import {
   Tooltip,
   alpha,
   useMediaQuery,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  Divider,
+  Chip,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
@@ -24,6 +31,7 @@ import TimelineIcon from '@mui/icons-material/Timeline';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import ViewInArIcon from '@mui/icons-material/ViewInAr';
 import CloseIcon from '@mui/icons-material/Close';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { motion, AnimatePresence } from 'framer-motion';
 import useStore from '../store/useStore';
 import speciesData from '../data/species.json';
@@ -98,7 +106,7 @@ function ViewerPage() {
             <Suspense
               fallback={<Skeleton variant="rectangular" height={480} sx={{ borderRadius: 2, bgcolor: '#1a1a2e' }} />}
             >
-              <Viewer3D color={species.color} height={480} smithsonianScan={species.smithsonianScan} sketchfabId={species.sketchfabId} />
+              <Viewer3D color={species.color} height={480} smithsonianScan={species.smithsonianScan} sketchfabId={species.sketchfabId} cameraYaw={species.sketchfabCameraYaw ?? null} />
             </Suspense>
           </Box>
 
@@ -148,10 +156,109 @@ function ViewerPage() {
   );
 }
 
+function AboutDialog({ open, onClose }) {
+  return (
+    <Dialog
+      open={open}
+      onClose={onClose}
+      maxWidth="sm"
+      fullWidth
+      PaperProps={{ sx: { bgcolor: 'background.paper', borderRadius: 3 } }}
+    >
+      <DialogTitle sx={{ pb: 1 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+          <Box
+            sx={{
+              width: 36,
+              height: 36,
+              borderRadius: '50%',
+              background: 'linear-gradient(135deg, #3CB371 0%, #4682B4 100%)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: 18,
+              flexShrink: 0,
+            }}
+          >
+            🦴
+          </Box>
+          <Box>
+            <Typography variant="h6" sx={{ fontWeight: 800, lineHeight: 1.1 }}>
+              Human Evolution Explorer
+            </Typography>
+            <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+              7 million years of human prehistory
+            </Typography>
+          </Box>
+        </Box>
+      </DialogTitle>
+
+      <Divider />
+
+      <DialogContent sx={{ pt: 2.5 }}>
+        <Typography variant="body2" sx={{ color: 'text.secondary', lineHeight: 1.8, mb: 2.5 }}>
+          An interactive web app for exploring the human family tree — from Sahelanthropus 7 million
+          years ago to modern Homo sapiens. Browse an interactive timeline, compare species side by
+          side, and examine real photogrammetry scans of fossil skulls from museum collections
+          around the world.
+        </Typography>
+
+        <Typography variant="subtitle2" sx={{ mb: 1.5 }}>Features</Typography>
+        <Box component="ul" sx={{ m: 0, pl: 2.5, color: 'text.secondary' }}>
+          {[
+            '13 hominin species with real 3D fossil skull scans',
+            'Interactive zoomable & pannable timeline spanning 7 Mya',
+            'Side-by-side species comparison',
+            'Detailed species cards with traits, region, and ancestry',
+            'Search and filter across all species',
+          ].map((item) => (
+            <Box component="li" key={item} sx={{ mb: 0.75 }}>
+              <Typography variant="body2" sx={{ color: 'text.secondary', lineHeight: 1.7 }}>{item}</Typography>
+            </Box>
+          ))}
+        </Box>
+
+        <Box sx={{ mt: 3, p: 2, bgcolor: 'rgba(79,156,249,0.06)', borderRadius: 2, border: '1px solid rgba(79,156,249,0.15)' }}>
+          <Typography variant="subtitle2" sx={{ mb: 0.5 }}>Credits</Typography>
+          <Typography variant="body2" sx={{ color: 'text.secondary', lineHeight: 1.8 }}>
+            Written by <strong style={{ color: '#e8eaf6' }}>Micky Balladelli</strong>, assisted by{' '}
+            <strong style={{ color: '#e8eaf6' }}>Claude</strong> (Anthropic).
+          </Typography>
+          <Typography variant="body2" sx={{ color: 'text.secondary', lineHeight: 1.8, mt: 0.5 }}>
+            3D skull models courtesy of MUVHN (Museo Universitat de València), Natural History
+            Museum London, UCF Anthropology / MorphoSource, and Adam Worthington. All scans used
+            under Creative Commons licences (CC-BY or CC-BY-NC).
+          </Typography>
+        </Box>
+
+        <Box sx={{ mt: 2.5, display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+          {['React', 'Vite', 'MUI', 'Three.js', 'Framer Motion', 'Sketchfab API'].map((tech) => (
+            <Chip
+              key={tech}
+              label={tech}
+              size="small"
+              sx={{ bgcolor: 'rgba(255,255,255,0.06)', fontSize: '0.7rem' }}
+            />
+          ))}
+        </Box>
+      </DialogContent>
+
+      <Divider />
+
+      <DialogActions sx={{ px: 3, py: 1.5 }}>
+        <Button onClick={onClose} variant="contained" size="small" disableElevation>
+          Close
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+}
+
 export default function Home() {
   const { activeView, setActiveView, searchQuery, setSearchQuery } = useStore();
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [aboutOpen, setAboutOpen] = useState(false);
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh', overflow: 'hidden' }}>
@@ -267,6 +374,13 @@ export default function Home() {
             )}
           </AnimatePresence>
 
+          {/* About button */}
+          <Tooltip title="About this project">
+            <IconButton size="small" onClick={() => setAboutOpen(true)}>
+              <InfoOutlinedIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+
           {/* Mobile menu button */}
           <IconButton
             size="small"
@@ -333,6 +447,9 @@ export default function Home() {
       <Suspense fallback={null}>
         <SpeciesDetailPanel />
       </Suspense>
+
+      {/* About dialog */}
+      <AboutDialog open={aboutOpen} onClose={() => setAboutOpen(false)} />
     </Box>
   );
 }

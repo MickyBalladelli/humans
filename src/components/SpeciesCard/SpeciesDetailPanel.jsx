@@ -232,7 +232,7 @@ export default function SpeciesDetailPanel() {
                   />
                 }
               >
-                <Viewer3D color={species.color} height={300} smithsonianScan={species.smithsonianScan} sketchfabId={species.sketchfabId} />
+                <Viewer3D color={species.color} height={300} smithsonianScan={species.smithsonianScan} sketchfabId={species.sketchfabId} cameraYaw={species.sketchfabCameraYaw ?? null} />
               </Suspense>
 
               <Button

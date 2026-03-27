@@ -22,6 +22,28 @@
     "sketchfabId": "08a5eb1ecef444d3a5f13bf5a2818923"
   },
   {
+    "id": "ardipithecus",
+    "name": "Ardipithecus ramidus",
+    "shortName": "Ardipithecus",
+    "start": -4400000,
+    "end": -4200000,
+    "description": "Ardipithecus ramidus, nicknamed 'Ardi', is one of the most significant fossil hominins ever discovered. A partial skeleton found in Ethiopia's Afar region and dated to 4.4 million years ago revealed a creature that was neither as ape-like nor as human-like as expected. Ardi walked on two legs on the ground but still had feet capable of grasping branches — suggesting she spent time both on the ground and in trees. Most strikingly, her canine teeth were smaller and less projecting than those of living apes, overturning the assumption that our last common ancestor with chimpanzees resembled a modern chimp.",
+    "traits": {
+      "brainSize": "~300–350 cc",
+      "height": "~1.2 m",
+      "diet": "Omnivorous — fruits, leaves, small animals",
+      "tools": "No evidence of tool use"
+    },
+    "region": "East Africa (Ethiopia, Afar Triangle)",
+    "ancestors": [],
+    "descendants": ["australopithecus-afarensis"],
+    "model3d": "/models/skull_generic.glb",
+    "color": "#7B3B00",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Ardipithecus_ramidus_01.jpg/300px-Ardipithecus_ramidus_01.jpg",
+    "smithsonianScan": null,
+    "sketchfabId": "284ee87af48b4c868ea7c28a34bc190b"
+  },
+  {
     "id": "australopithecus-afarensis",
     "name": "Australopithecus afarensis",
     "shortName": "Au. afarensis",
@@ -36,12 +58,34 @@
     },
     "region": "East Africa (Ethiopia, Tanzania, Kenya)",
     "ancestors": [],
-    "descendants": ["homo-habilis", "paranthropus"],
+    "descendants": ["homo-habilis", "paranthropus", "australopithecus-africanus"],
     "model3d": "/models/skull_generic.glb",
     "color": "#A0522D",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Australopithecus_afarensis.jpg/300px-Australopithecus_afarensis.jpg",
     "smithsonianScan": null,
     "sketchfabId": "b23a6d2543ed4bd79ff327551ea77d10"
+  },
+  {
+    "id": "australopithecus-africanus",
+    "name": "Australopithecus africanus",
+    "shortName": "Au. africanus",
+    "start": -3300000,
+    "end": -2100000,
+    "description": "Australopithecus africanus was the first australopithecine ever described, when Raymond Dart identified the 'Taung Child' skull in South Africa in 1925. Later specimens including 'Mrs. Ples' (Sts 5) and the near-complete 'Little Foot' skeleton have further illuminated this species. With a slightly larger and rounder braincase than its East African cousin Au. afarensis, and smaller canine teeth, Au. africanus is considered by many researchers to fall on or near the lineage leading to the genus Homo. It walked fully upright and lived in a mosaic of woodland and open grassland in southern Africa.",
+    "traits": {
+      "brainSize": "420–500 cc",
+      "height": "1.1–1.4 m",
+      "diet": "Fruits, seeds, tubers, possibly small animals",
+      "tools": "No confirmed stone tool use"
+    },
+    "region": "South Africa",
+    "ancestors": ["australopithecus-afarensis"],
+    "descendants": [],
+    "model3d": "/models/skull_generic.glb",
+    "color": "#B05A00",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Australopithecus_africanus_-_Cast_of_taung_child.jpg/300px-Australopithecus_africanus_-_Cast_of_taung_child.jpg",
+    "smithsonianScan": null,
+    "sketchfabId": "7735176c531b48d09993ac7a7a0aa6f5"
   },
   {
     "id": "paranthropus",
@@ -113,7 +157,8 @@
       "institution": "Senckenberg Research Institute, Germany",
       "viewUrl": "https://3d.si.edu/collections/hominin-fossils"
     },
-    "sketchfabId": "809bc537e5a648c9bc355f4b1541578d"
+    "sketchfabId": "809bc537e5a648c9bc355f4b1541578d",
+    "sketchfabCameraYaw": 90
   },
   {
     "id": "homo-heidelbergensis",
@@ -136,6 +181,28 @@
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Homo_heidelbergensis_-_Cranium_5.jpg/300px-Homo_heidelbergensis_-_Cranium_5.jpg",
     "smithsonianScan": null,
     "sketchfabId": "ea8e7acd3f8648608b6e050ed6a2d9d1"
+  },
+  {
+    "id": "homo-naledi",
+    "name": "Homo naledi",
+    "shortName": "H. naledi",
+    "start": -335000,
+    "end": -236000,
+    "description": "Discovered in 2013 deep in the Rising Star cave system near Johannesburg, Homo naledi astonished the scientific world with its paradoxical anatomy: a brain barely larger than a chimpanzee's paired with legs and feet almost indistinguishable from modern humans. Even more remarkable was the discovery that naledi survived until just 335,000–236,000 years ago — coexisting with early Homo sapiens — despite retaining a highly primitive brain and body plan. The number of fossil individuals and their inaccessible location deep in a cave have led researchers to propose that naledi may have intentionally deposited their dead long before this behaviour was thought to evolve.",
+    "traits": {
+      "brainSize": "464–610 cc",
+      "height": "~1.44–1.5 m",
+      "diet": "Unknown; likely omnivorous",
+      "tools": "Possible stone tool use (under investigation)"
+    },
+    "region": "South Africa (Rising Star cave system, Cradle of Humankind)",
+    "ancestors": [],
+    "descendants": [],
+    "model3d": "/models/skull_generic.glb",
+    "color": "#6A4C93",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Homo_naledi_skull.jpg/300px-Homo_naledi_skull.jpg",
+    "smithsonianScan": null,
+    "sketchfabId": "f8978bc2fd594c40902148e008981465"
   },
   {
     "id": "homo-neanderthalensis",
