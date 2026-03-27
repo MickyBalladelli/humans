@@ -44,6 +44,28 @@
     "sketchfabId": "b23a6d2543ed4bd79ff327551ea77d10"
   },
   {
+    "id": "paranthropus",
+    "name": "Paranthropus boisei",
+    "shortName": "Paranthropus",
+    "start": -2700000,
+    "end": -1200000,
+    "description": "Paranthropus — the 'robust australopithecines' — were a closely related but separate branch of human evolution that flourished in Africa from 2.7 to 1.2 million years ago. Three species are recognised: P. aethiopicus, P. boisei (nicknamed 'Nutcracker Man' for its enormous molars), and P. robustus. They evolved massively powerful jaws, huge grinding teeth, and a pronounced sagittal crest on the skull to anchor the muscles needed to process tough, fibrous plant foods. Despite coexisting with early Homo species for over a million years, Paranthropus left no descendants and went extinct around 1.2 million years ago — a fascinating evolutionary dead end in the human family tree.",
+    "traits": {
+      "brainSize": "410–530 cc",
+      "height": "1.1–1.4 m",
+      "diet": "Tough plant foods — tubers, seeds, fibrous vegetation",
+      "tools": "No confirmed tool use"
+    },
+    "region": "East and South Africa",
+    "ancestors": ["australopithecus-afarensis"],
+    "descendants": [],
+    "model3d": "/models/skull_generic.glb",
+    "color": "#C05B0D",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Paranthropus_boisei_2.jpg/300px-Paranthropus_boisei_2.jpg",
+    "smithsonianScan": null,
+    "sketchfabId": "dc75906c0e9c4bbc9faba2a42dcc329d"
+  },
+  {
     "id": "homo-habilis",
     "name": "Homo habilis",
     "shortName": "H. habilis",

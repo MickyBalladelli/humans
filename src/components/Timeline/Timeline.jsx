@@ -1,4 +1,4 @@
-import React, { useRef, useState, useCallback } from 'react';
+import React, { useRef, useState, useCallback, useEffect } from 'react';
 import { Box, Typography, Tooltip, IconButton, Chip } from '@mui/material';
 import { motion, AnimatePresence } from 'framer-motion';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
@@ -47,9 +47,58 @@ export default function Timeline() {
     );
   }, [searchQuery]);
 
-  const handleZoomIn = () => setZoom((z) => Math.min(z + 0.4, 4));
-  const handleZoomOut = () => setZoom((z) => Math.max(z - 0.4, 0.6));
-  const handleReset = () => setZoom(1);
+  // Anchor zoom to current viewport centre so the view doesn't jump to the left edge
+  const pendingAnchor = useRef(null);
+  const captureAnchor = () => {
+    if (!scrollRef.current) return;
+    const { scrollLeft, clientWidth, scrollWidth } = scrollRef.current;
+    pendingAnchor.current = (scrollLeft + clientWidth / 2) / scrollWidth;
+  };
+  const handleZoomIn  = () => { captureAnchor(); setZoom((z) => Math.min(z + 0.4, 4)); };
+  const handleZoomOut = () => { captureAnchor(); setZoom((z) => Math.max(z - 0.4, 0.6)); };
+  const handleReset   = () => { setZoom(1); if (scrollRef.current) scrollRef.current.scrollLeft = 0; };
+
+  useEffect(() => {
+    const frac = pendingAnchor.current;
+    if (frac == null || !scrollRef.current) return;
+    pendingAnchor.current = null;
+    const { scrollWidth, clientWidth } = scrollRef.current;
+    scrollRef.current.scrollLeft = frac * scrollWidth - clientWidth / 2;
+  }, [zoom]);
+
+  // Pointer drag-to-pan
+  const dragState = useRef({ active: false, startX: 0, scrollLeft: 0, moved: false });
+
+  const handlePointerDown = useCallback((e) => {
+    if (!scrollRef.current) return;
+    dragState.current = {
+      active: true,
+      startX: e.clientX,
+      scrollLeft: scrollRef.current.scrollLeft,
+      moved: false,
+    };
+  }, []);
+
+  const handlePointerMove = useCallback((e) => {
+    if (!dragState.current.active) return;
+    const dx = e.clientX - dragState.current.startX;
+    if (Math.abs(dx) > 4) {
+      dragState.current.moved = true;
+      scrollRef.current.scrollLeft = dragState.current.scrollLeft - dx;
+    }
+  }, []);
+
+  const handlePointerUp = useCallback(() => {
+    dragState.current.active = false;
+  }, []);
+
+  // Suppress click-on-bar events that are actually the end of a drag
+  const handleClickCapture = useCallback((e) => {
+    if (dragState.current.moved) {
+      dragState.current.moved = false;
+      e.stopPropagation();
+    }
+  }, []);
 
   const handleSelect = useCallback(
     (species) => {
@@ -76,7 +125,7 @@ export default function Timeline() {
 
   const maxRow = Math.max(...rows.map((r) => r.row));
   const ROW_HEIGHT = 72;
-  const timelineHeight = (maxRow + 1) * ROW_HEIGHT + 120;
+  const timelineHeight = (maxRow + 1) * ROW_HEIGHT + 140;
   const timelineWidth = `${100 * zoom}%`;
 
   return (
@@ -118,6 +167,10 @@ export default function Timeline() {
       {/* Scrollable timeline canvas */}
       <Box
         ref={scrollRef}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onClickCapture={handleClickCapture}
         sx={{
           flex: 1,
           overflowX: 'auto',
@@ -126,6 +179,12 @@ export default function Timeline() {
           bgcolor: 'background.default',
           cursor: 'grab',
           '&:active': { cursor: 'grabbing' },
+          // Keep scrollbar always visible so users know they can scroll
+          scrollbarWidth: 'thin',
+          scrollbarColor: 'rgba(255,255,255,0.2) transparent',
+          '&::-webkit-scrollbar': { height: 6 },
+          '&::-webkit-scrollbar-thumb': { bgcolor: 'rgba(255,255,255,0.2)', borderRadius: 3 },
+          '&::-webkit-scrollbar-track': { bgcolor: 'transparent' },
         }}
       >
         <Box
@@ -141,7 +200,7 @@ export default function Timeline() {
           <Box
             sx={{
               position: 'absolute',
-              bottom: 56,
+              bottom: 36,
               left: '4%',
               right: '4%',
               height: 2,
@@ -157,7 +216,7 @@ export default function Timeline() {
                 key={tick}
                 sx={{
                   position: 'absolute',
-                  bottom: 40,
+                  bottom: 20,
                   left: `${pct}%`,
                   transform: 'translateX(-50%)',
                   display: 'flex',
@@ -274,7 +333,7 @@ export default function Timeline() {
           <Box
             sx={{
               position: 'absolute',
-              bottom: 40,
+              bottom: 44,
               right: '4%',
               display: 'flex',
               flexDirection: 'column',
@@ -310,7 +369,7 @@ export default function Timeline() {
         }}
       >
         <Typography variant="caption" sx={{ color: 'text.disabled' }}>
-          Click any bar to view species details
+          Click a bar to view details · Drag to pan · Scroll to zoom
         </Typography>
         {allSpecies.map((s) => (
           <Box
