@@ -1,6 +1,6 @@
 # Human Evolution Explorer
 ![ Humans ](humans.png) 
-[Demo at Vercel](https://asteroids-eight-opal.vercel.app/)
+[Demo at Vercel](https://humans-rose.vercel.app/)
 An interactive web app for exploring 13 hominin species across 7 million years of human evolution. Browse an interactive timeline, view real photogrammetry skull scans, compare species side-by-side, and read detailed profiles for each species.
 
 ## Features
