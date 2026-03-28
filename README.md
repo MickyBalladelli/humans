@@ -1,12 +1,12 @@
 # Human Evolution Explorer
 ![ Humans ](humans.png) 
 [Demo at Vercel](https://asteroids-eight-opal.vercel.app/)
-An interactive web app for exploring 9 hominin species across 7 million years of human evolution. Browse an interactive timeline, view real photogrammetry skull scans, compare species side-by-side, and read detailed profiles for each species.
+An interactive web app for exploring 13 hominin species across 7 million years of human evolution. Browse an interactive timeline, view real photogrammetry skull scans, compare species side-by-side, and read detailed profiles for each species.
 
 ## Features
 
-- **Interactive Timeline** — Visualize all 9 species plotted across geological time from Sahelanthropus (~7 Mya) to Homo sapiens
-- **3D Skull Viewer** — Embedded Sketchfab photogrammetry scans for 9/9 species (real fossil casts and reconstructions). Denisovans uses the Harbin cranium reconstruction. Fallback to procedural Three.js skull for any species without a scan
+- **Interactive Timeline** — Visualize all 13 species plotted across geological time from Sahelanthropus (~7 Mya) to Homo sapiens
+- **3D Skull Viewer** — Embedded Sketchfab photogrammetry scans for 13/13 species (real fossil casts and reconstructions). Denisovans uses the Harbin cranium reconstruction. Procedural Three.js skull remains available as a fallback mode
 - **Species Detail Panel** — Traits, range, ancestors/descendants, and a description for each species
 - **Side-by-side Comparison** — Select any two species to compare their skulls and key traits
 - **Search & Filter** — Search species by name across the timeline and home view
@@ -16,10 +16,14 @@ An interactive web app for exploring 9 hominin species across 7 million years of
 | Species | Age | Skull Model Source |
 |---|---|---|
 | Sahelanthropus tchadensis | ~7–6 Mya | MUVHN (CC-BY-NC) |
+| Ardipithecus ramidus | ~4.4–4.2 Mya | MUVHN (CC-BY) |
 | Australopithecus afarensis | ~3.9–2.9 Mya | MUVHN (CC-BY) |
+| Australopithecus africanus | ~3.3–2.1 Mya | MUVHN (CC-BY) |
+| Paranthropus boisei | ~2.7–1.2 Mya | MUVHN (CC-BY) |
 | Homo habilis | ~2.4–1.4 Mya | MUVHN (CC-BY) |
 | Homo erectus | ~1.9–0.1 Mya | MUVHN (CC-BY) |
 | Homo heidelbergensis | ~700–200 Kya | MUVHN (CC-BY) |
+| Homo naledi | ~335–236 Kya | MUVHN (CC-BY) |
 | Homo neanderthalensis | ~400–40 Kya | MUVHN (CC-BY) |
 | Denisovans | ~500–30 Kya | Adam Worthington / Harbin cranium (CC-BY) |
 | Homo floresiensis | ~100–50 Kya | Thomas Flynn / NHM London (CC-BY) |
